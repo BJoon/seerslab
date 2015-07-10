@@ -16,11 +16,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.FunctionCallback;
 import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 
 public class MainActivity extends Activity {
@@ -60,6 +63,15 @@ public class MainActivity extends Activity {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();*/
+        ParseCloud.callFunctionInBackground("hello", new HashMap<String, Object>(), new FunctionCallback<String>() {
+            @Override
+            public void done(String result, com.parse.ParseException e) {
+             if(e==null){
+                 Log.d("Result",result);
+                 //result is "Hello world!"
+             }
+            }
+        });
     }
 
    protected void onActivityResult(int requestCode,int resultCode, Intent data){
@@ -102,12 +114,6 @@ public class MainActivity extends Activity {
                    Log.d(TAG, "parse succ");
                    parsesave.saveInBackground();
                    Log.d(TAG, "save succ2");
-
-
-
-
-
-
 
                   /* photoFile.saveInBackground(new SaveCallback() {
                        @Override
